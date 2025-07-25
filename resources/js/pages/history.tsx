@@ -48,17 +48,16 @@ color: "#ef4444",
 
 const breadcrumbs: BreadcrumbItem[] = [
 {
-title: 'Dashboard',
-href: '/dashboard',
+title: 'History',
+href: '/history',
 },
 ];
 
-export default function Dashboard({ leftData, rightData }) {
-    console.log(leftData);
+export default function History() {
 return (
 <AppLayout breadcrumbs={breadcrumbs}>
 
-    <Head title="Dashboard" />
+    <Head title="History" />
     <div className="flex h-full flex-1 flex-col gap-4 rounded-xl p-4 overflow-x-auto">
         <div className="grid auto-rows-min gap-4 md:grid-cols-2">
             <div className="relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">

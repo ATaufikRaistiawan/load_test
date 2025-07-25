@@ -7,14 +7,14 @@ use App\Models\MachineRightData;
 
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use Inertia\Inertia;
 
 class IndexController extends Controller
 {
-    public function index():View{
-        // get all machine data
-        $leftLatest = MachineLeftData::latest()->paginate(10);
-        $rightLatest = MachineRightData::latest()->paginate(10);
-
-        return view('machine.index', compact('leftLatest','rightLatest'));
+    public function index(){
+        return Inertia::render('Dashboard', [
+            'leftData' => MachineLeftData::all(),
+            'rightData' => MachineRightData::all(),
+        ]);
     }
 }
