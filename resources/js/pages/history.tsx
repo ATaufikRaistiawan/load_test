@@ -4,47 +4,16 @@ import { PlaceholderPattern } from '@/components/ui/placeholder-pattern';
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
 import { Head } from '@inertiajs/react';
-import { TrendingUp } from "lucide-react"
-import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts"
 
 import {
-Card,
-CardContent,
-CardDescription,
-CardFooter,
-CardHeader,
-CardTitle,
-}
+Tabs,
+TabsContent,
+TabsList,
+TabsTrigger
+} from "@/components/ui/tabs"
 
-from '@/components/ui/card'
-import {
-ChartConfig,
-ChartContainer,
-ChartTooltip,
-ChartTooltipContent,
-} from '@/components/ui/chart'
-
-const chartData = [
-{ month: "January", desktop: 186, mobile: 80 },
-{ month: "February", desktop: 305, mobile: 200 },
-{ month: "March", desktop: 237, mobile: 120 },
-{ month: "April", desktop: 73, mobile: 190 },
-{ month: "May", desktop: 209, mobile: 130 },
-{ month: "June", desktop: 214, mobile: 140 },
-]
-
-const chartConfig = {
-desktop: {
-label: "Desktop",
-color: "#3b82f6",
-// color: "hsl(var(--chart-1))",
-},
-mobile: {
-label: "Mobile",
-color: "#ef4444",
-// color: "hsl(var(--chart-2))",
-},
-} satisfies ChartConfig
+import { columns, Payment } from "./columns"
+import { DataTable } from "./data-table"
 
 const breadcrumbs: BreadcrumbItem[] = [
 {
@@ -53,78 +22,158 @@ href: '/history',
 },
 ];
 
-export default function History() {
-return (
-<AppLayout breadcrumbs={breadcrumbs}>
+function getData(): Promise<Payment[]> {
+    // Fetch data from your API here.
+    return [
+    {
+    id: "728ed52f",
+    amount: 100,
+    status: "pending",
+    email: "m@example.com",
+    },
+    {
+    id: "728ed52f",
+    amount: 100,
+    status: "pending",
+    email: "m@example.com",
+    },
+    {
+    id: "728ed52f",
+    amount: 100,
+    status: "pending",
+    email: "m@example.com",
+    },
+    {
+    id: "728ed52f",
+    amount: 100,
+    status: "pending",
+    email: "m@example.com",
+    },
+    {
+    id: "728ed52f",
+    amount: 100,
+    status: "pending",
+    email: "m@example.com",
+    },
+    {
+    id: "728ed52f",
+    amount: 100,
+    status: "pending",
+    email: "m@example.com",
+    },
+    {
+    id: "728ed52f",
+    amount: 100,
+    status: "pending",
+    email: "m@example.com",
+    },
+    {
+    id: "728ed52f",
+    amount: 100,
+    status: "pending",
+    email: "m@example.com",
+    },
+    {
+    id: "728ed52f",
+    amount: 100,
+    status: "pending",
+    email: "m@example.com",
+    },
+    {
+    id: "728ed52f",
+    amount: 100,
+    status: "pending",
+    email: "m@example.com",
+    },
+    {
+    id: "728ed52f",
+    amount: 100,
+    status: "pending",
+    email: "m@example.com",
+    },
+    {
+    id: "728ed52f",
+    amount: 100,
+    status: "pending",
+    email: "m@example.com",
+    },
+    {
+    id: "728ed52f",
+    amount: 100,
+    status: "pending",
+    email: "m@example.com",
+    },
+    {
+    id: "728ed52f",
+    amount: 100,
+    status: "pending",
+    email: "m@example.com",
+    },
+    ]
+    }
 
-    <Head title="History" />
-    <div className="flex h-full flex-1 flex-col gap-4 rounded-xl p-4 overflow-x-auto">
-        <div className="grid auto-rows-min gap-4 md:grid-cols-2">
-            <div className="relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
-                <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
-            </div>
-            <div
-                className="relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
-                <PlaceholderPattern
-                    className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
-            </div>
-            <div className="relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
-                <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
-            </div>
-            <div
-                className="relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
-                <PlaceholderPattern
-                    className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
-            </div>
-        </div>
+    export default function History() {
+    const data = getData()
+    return (
+    <AppLayout>
 
-        {/* <div
-            className="relative min-h-[100vh] flex-1 overflow-hidden rounded-xl border border-sidebar-border/70 md:min-h-min dark:border-sidebar-border">
-            <PlaceholderPattern
-                className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
-                <Card>
-                    <CardHeader>
-                        <CardTitle>Area Chart - Axes</CardTitle>
-                        <CardDescription>
-                            Showing total visitors for the last 6 months
-                        </CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                        <ChartContainer config={chartConfig}>
-                            <AreaChart accessibilityLayer data={chartData} margin={{
-              left: -20,
-              right: 12,
-            }}>
-                                <CartesianGrid vertical={false} />
-                                <XAxis dataKey="month" tickLine={false} axisLine={false} tickMargin={8}
-                                    tickFormatter={(value)=> value.slice(0, 3)}
-                                    />
-                                    <YAxis tickLine={false} axisLine={false} tickMargin={8} tickCount={3} />
-                                    <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
-                                    <Area dataKey="mobile" type="natural" fill="var(--color-mobile)" fillOpacity={0.4}
-                                        stroke="var(--color-mobile)" stackId="a" />
-                                    <Area dataKey="desktop" type="natural" fill="var(--color-desktop)" fillOpacity={0.4}
-                                        stroke="var(--color-desktop)" stackId="a" />
-                            </AreaChart>
-                        </ChartContainer>
-                    </CardContent>
-                    <CardFooter>
-                        <div className="flex w-full items-start gap-2 text-sm">
-                            <div className="grid gap-2">
-                                <div className="flex items-center gap-2 font-medium leading-none">
-                                    Trending up by 5.2% this month
-                                    <TrendingUp className="h-4 w-4" />
-                                </div>
-                                <div className="flex items-center gap-2 leading-none text-muted-foreground">
-                                    January - June 2024
-                                </div>
-                            </div>
+        <Head title="History" />
+        <div className="mt-8">
+            <Tabs defaultValue="left" className="w-full">
+                <div className="flex items-center justify-between mb-4">
+                    <TabsList className="bg-slate-800/50 p-1">
+                        <TabsTrigger value="left"
+                            className="data-[state=active]:bg-slate-700 data-[state=active]:text-cyan-400">
+                            Left Stage
+                        </TabsTrigger>
+                        <TabsTrigger value="right"
+                            className="data-[state=active]:bg-slate-700 data-[state=active]:text-cyan-400">
+                            Right Stage
+                        </TabsTrigger>
+                        <TabsTrigger value="total"
+                            className="data-[state=active]:bg-slate-700 data-[state=active]:text-cyan-400">
+                            Total
+                        </TabsTrigger>
+                    </TabsList>
+
+                    {/* <div className="flex items-center space-x-2 text-xs text-slate-400">
+                        <div className="flex items-center">
+                            <div className="h-2 w-2 rounded-full bg-cyan-500 mr-1"></div>
+                            CPU
                         </div>
-                    </CardFooter>
-                </Card>
-        </div> */}
-        
-    </div>
-</AppLayout>
-);
-}
+                        <div className="flex items-center">
+                            <div className="h-2 w-2 rounded-full bg-purple-500 mr-1"></div>
+                            Memory
+                        </div>
+                        <div className="flex items-center">
+                            <div className="h-2 w-2 rounded-full bg-blue-500 mr-1"></div>
+                            Network
+                        </div>
+                    </div> */}
+                </div>
+
+                <TabsContent value="left" className="mt-0">
+                    <div className="bg-slate-800/30 rounded-lg border border-slate-700/50 p-4">
+
+                        <div className="container mx-auto py-10">
+                            <DataTable columns={columns} data={data} />
+                        </div>
+                    </div>
+                </TabsContent>
+
+                <TabsContent value="right" className="mt-0">
+                    <div className="bg-slate-800/30 rounded-lg border border-slate-700/50 p-4">
+                        second tab
+                    </div>
+                </TabsContent>
+
+                <TabsContent value="total" className="mt-0">
+                    <div className="bg-slate-800/30 rounded-lg border border-slate-700/50 p-4">
+                        third tab
+                    </div>
+                </TabsContent>
+            </Tabs>
+        </div>
+    </AppLayout>
+    );
+    }

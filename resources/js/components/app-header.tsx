@@ -18,13 +18,8 @@ import AppLogoIcon from './app-logo-icon';
 const mainNavItems: NavItem[] = [
     {
         title: 'Dashboard',
-        href: '/dashboard',
+        href: '/',
         icon: LayoutGrid,
-    },
-    {
-        title: 'Stage',
-        href: '/stage',
-        icon: BriefcaseConveyorBelt,
     },
     {
         title: 'History',

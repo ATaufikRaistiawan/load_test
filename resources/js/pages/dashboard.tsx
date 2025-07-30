@@ -10,6 +10,7 @@ import Autoplay from "embla-carousel-autoplay"
 import * as React from "react"
 import wheel from './images/wheel.png'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { usePollingData } from "@/hooks/use-polling-data";
 
 
 
@@ -66,13 +67,16 @@ TableRow,
 
 
 export default function Dashboard({
-    latestLeftData, leftData, rightData,
+    leftData, rightData,
 }: {
-    latestLeftData: latestLeftStageData,
     leftData: leftStageData[],
     rightData: rightStageData[]
 })
 {
+    
+const latestLeftData = usePollingData<latestLeftStageData>("/api/latest-left-data", 1000);
+const latestRightData = usePollingData<latestLeftStageData>("/api/latest-right-data", 1000);
+
 return (
 
 <AppLayout>
@@ -87,29 +91,22 @@ return (
                         <CardTitle className="text-slate-100 flex items-center">
                             Left Stage
                         </CardTitle>
-                        <div className="flex items-center space-x-2">
-                            <Badge variant="outline"
-                                className="bg-slate-800/50 text-cyan-400 border-cyan-500/50 text-sm">
-                                <div className="h-1.5 w-1.5 rounded-full bg-cyan-500 mr-1 animate-spin"></div>
-                                RUNNING
-                            </Badge>
-                        </div>
+                        <RunningStatus status={latestLeftData?.isRunning ?? false}/>
                     </div>
                 </CardHeader>
                 <CardContent className="justify-between">
                     <div className="grid grid-cols-2 md:grid-cols-2 gap-6">
                         <div>
-                            <MetricCard title="Speed" value={latestLeftData.rpm} icon={Wind} color="cyan" detail={latestLeftData.rpm_target}
+                            <MetricCard title="Speed" value={latestLeftData?.rpm ?? 0} icon={Wind} color="cyan" detail={latestLeftData?.rpm_target ?? 0}
                                 suffix='rpm' />
                             <div className='p-3'></div>
-                            <MetricCard title="Load" value={latestLeftData.load} icon={Weight} color="cyan" detail={latestLeftData.load_target}
+                            <MetricCard title="Load" value={latestLeftData?.load ?? 0} icon={Weight} color="cyan" detail={latestLeftData?.load_target ?? 0}
                                 suffix='kN' />
                             <div className='p-3'></div>
-                            <MetricCard title="Revolution" value={latestLeftData.rev} icon={MapPin} color="cyan" detail={latestLeftData.rev_target}
+                            <MetricCard title="Revolution" value={latestLeftData?.rev ?? 0} icon={MapPin} color="cyan" detail={latestLeftData?.rev_target ?? 0}
                                 suffix='rev' />
                         </div>
                         <div>
-                            {/* {latestLeftData.rpm} */}
                         </div>
                     </div>
                 </CardContent>
@@ -123,31 +120,24 @@ return (
                         <CardTitle className="text-slate-100 flex items-center">
                             Right Stage
                         </CardTitle>
-                        <div className="flex items-center space-x-2">
-                            <Badge variant="outline"
-                                className="bg-slate-800/50 text-cyan-400 border-cyan-500/50 text-sm">
-                                <div className="h-1.5 w-1.5 rounded-full bg-cyan-500 mr-1 animate-pulse"></div>
-                                RUNNING
-                            </Badge>
-                        </div>
+                        <RunningStatus status={latestRightData?.isRunning ?? false}/>
                     </div>
                 </CardHeader>
                 <CardContent>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        
-                        {/* <CarouselPlugin /> */}
-                        <MetricCard title="Speed" value={1000} icon={Wind} color="cyan" detail="5000" suffix='rpm' />
                         <div>
-                            {/* <img className='animate-spin' src={wheel} alt="react logo" /> */}
+                            <MetricCard title="Speed" value={latestRightData?.rpm ?? 0} icon={Wind} color="cyan" detail={latestRightData?.rpm_target ?? 0}
+                                suffix='rpm' />
+                            <div className='p-3'></div>
+                            <MetricCard title="Load" value={latestRightData?.load ?? 0} icon={Weight} color="cyan" detail={latestRightData?.load_target ?? 0}
+                                suffix='kN' />
+                            <div className='p-3'></div>
+                            <MetricCard title="Revolution" value={latestRightData?.rev ?? 0} icon={MapPin} color="cyan" detail={latestRightData?.rev_target ?? 0}
+                                suffix='rev' />
                         </div>
-                        <MetricCard title="Load" value={1000} icon={Weight} color="cyan" detail="5000" suffix='kN' />
-                        <div></div>
-                        <MetricCard title="Revolution" value={1000} icon={MapPin} color="cyan" detail="5000"
-                            suffix='rev' />
                     </div>
                 </CardContent>
                 <CardFooter>
-                    <p>Card Footer</p>
                 </CardFooter>
             </Card>
         </div>
@@ -205,4 +195,38 @@ return (
     </div>
 </div>
 )
+}
+
+function RunningStatus({
+    status = true,
+}: {
+    status: boolean
+}) {
+    const statusType = Boolean(status) || 0
+    
+    if (statusType) {
+
+        return(
+
+        <div className="flex items-center space-x-2">
+            <Badge variant="outline"
+            className="bg-slate-800/50 text-cyan-400 border-cyan-500/50 text-sm">
+            <div className="h-1.5 w-1.5 rounded-full bg-cyan-500 mr-1 animate-pulse"></div>
+            RUNNING
+            </Badge>
+        </div>
+        )
+    }
+
+    else{
+        return(
+        <div className="flex items-center space-x-2">
+            <Badge variant="outline"
+            className="bg-amber-950 text-white border-amber-500/50 text-sm">
+            <div className="h-1.5 w-1.5 rounded-full bg-red-500 mr-1"></div>
+            STOP
+            </Badge>
+        </div>
+        )
+    }
 }
