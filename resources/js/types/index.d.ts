@@ -41,3 +41,48 @@ export interface User {
     updated_at: string;
     [key: string]: unknown; // This allows for additional properties...
 }
+
+export interface leftStageData {
+    id: number;
+    timestamp: string;
+    rpm: number;
+    rev: number;
+    load: number;
+    rpm_target: number;
+    rev_target: number;
+    load_target: number;
+    target: number;
+    isRunning: boolean;
+    created_at: string;
+    updated_at: string;
+}
+
+export interface rightStageData {
+    id: number;
+    timestamp: string;
+    rpm: number;
+    rev: number;
+    load: number;
+    rpm_target: number;
+    rev_target: number;
+    load_target: number;
+    target: number;
+    isRunning: boolean;
+    created_at: string;
+    updated_at: string;
+}
+
+export interface latestLeftStageData {
+    id: number;
+    timestamp: string;
+    rpm: number;
+    rev: number;
+    load: number;
+    rpm_target: number;
+    rev_target: number;
+    load_target: number;
+    target: number;
+    isRunning: boolean;
+    created_at: string;
+    updated_at: string;
+}

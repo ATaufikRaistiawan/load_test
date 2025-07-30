@@ -4,7 +4,7 @@ import { NavUser } from '@/components/nav-user';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/react';
-import { BookOpen, Folder, LayoutGrid, FolderClock } from 'lucide-react';
+import { BookOpen, Folder, LayoutGrid, FolderClock, BriefcaseConveyorBelt } from 'lucide-react';
 import AppLogo from './app-logo';
 
 const mainNavItems: NavItem[] = [
@@ -13,6 +13,11 @@ const mainNavItems: NavItem[] = [
         href: '/',
         icon: LayoutGrid,
     },
+    // {
+    //     title: 'Stage',
+    //     href: '/stage',
+    //     icon: BriefcaseConveyorBelt,
+    // },
     {
         title: 'History',
         href: '/history',
@@ -35,7 +40,7 @@ const footerNavItems: NavItem[] = [
 
 export function AppSidebar() {
     return (
-        <Sidebar collapsible="icon" variant="inset">
+        <Sidebar collapsible="icon" variant="floating">
             <SidebarHeader>
                 <SidebarMenu>
                     <SidebarMenuItem>

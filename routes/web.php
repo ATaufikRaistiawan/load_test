@@ -4,24 +4,15 @@ use App\Http\Controllers\IndexController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
+// Root dashboard
+Route::get('/', [IndexController::class, 'index'])->name('home');
 
+// History page
+Route::get('/history', fn () => Inertia::render('history'))->name('history');
 
-Route::resource('/index', IndexController::class);
+// Stage page (Inertia View)
+Route::get('/stage', fn () => Inertia::render('Stage/Index'))->name('stage.index');
 
-Route::get('/', function () {
-    return Inertia::render('dashboard');
-})->name('home');
-
-Route::get('/history', function () {
-    return Inertia::render('history');
-})->name('history');
-
-// Route::middleware(['auth', 'verified'])->group(function () {
-//     Route::get('dashboard', function () {
-//         return Inertia::render('dashboard');
-//     })->name('dashboard');
-// });
-
-
-// require __DIR__.'/settings.php';
-// require __DIR__.'/auth.php';
+// API for polling (can also be moved to routes/api.php)
+Route::get('/api/latest-left-data', [IndexController::class, 'latestLeftData']);
+Route::get('/api/latest-right-data', [IndexController::class, 'latestRightData']);
