@@ -51,7 +51,7 @@ export interface leftStageData {
     rpm_target: number;
     rev_target: number;
     load_target: number;
-    target: number;
+    alarm: number;
     isRunning: boolean;
     created_at: string;
     updated_at: string;
@@ -66,13 +66,28 @@ export interface rightStageData {
     rpm_target: number;
     rev_target: number;
     load_target: number;
-    target: number;
+    alarm: number;
     isRunning: boolean;
     created_at: string;
     updated_at: string;
 }
 
 export interface latestLeftStageData {
+    id: number;
+    timestamp: string;
+    rpm: number;
+    rev: number;
+    load: number;
+    rpm_target: number;
+    rev_target: number;
+    load_target: number;
+    target: number;
+    isRunning: boolean;
+    created_at: string;
+    updated_at: string;
+}
+
+export interface latestRightStageData {
     id: number;
     timestamp: string;
     rpm: number;

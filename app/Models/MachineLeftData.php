@@ -24,4 +24,10 @@ class MachineLeftData extends Model
         'alarm',
         'isRunning',
     ];
+    public function alarmDetail()
+{
+    return $this->belongsTo(AlarmList::class, 'alarm');
 }
+
+}
+

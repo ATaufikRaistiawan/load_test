@@ -1,14 +1,13 @@
 <?php
 
 use App\Http\Controllers\IndexController;
+use App\Http\Controllers\HistoryController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 // Root dashboard
 Route::get('/', [IndexController::class, 'index'])->name('home');
-
-// History page
-Route::get('/history', fn () => Inertia::render('history'))->name('history');
+Route::get('/history', [HistoryController::class, 'index'])->name('history');
 
 // Stage page (Inertia View)
 Route::get('/stage', fn () => Inertia::render('Stage/Index'))->name('stage.index');

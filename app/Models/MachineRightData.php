@@ -24,4 +24,9 @@ class MachineRightData extends Model
         'alarm',
         'isRunning',
     ];
+    public function alarmDetail()
+{
+    return $this->belongsTo(AlarmList::class, 'alarm');
+}
+
 }

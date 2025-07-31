@@ -3,7 +3,7 @@
 import { PlaceholderPattern } from '@/components/ui/placeholder-pattern';
 import AppLayout from '@/layouts/app-layout';
 import { Head } from '@inertiajs/react';
-import { type leftStageData, rightStageData,  latestLeftStageData} from '@/types'
+import { type leftStageData, rightStageData,  latestLeftStageData, latestRightStageData} from '@/types'
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import Autoplay from "embla-carousel-autoplay"
@@ -11,9 +11,6 @@ import * as React from "react"
 import wheel from './images/wheel.png'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { usePollingData } from "@/hooks/use-polling-data";
-
-
-
 
 import {
 Activity,
@@ -75,13 +72,11 @@ export default function Dashboard({
 {
     
 const latestLeftData = usePollingData<latestLeftStageData>("/api/latest-left-data", 1000);
-const latestRightData = usePollingData<latestLeftStageData>("/api/latest-right-data", 1000);
+const latestRightData = usePollingData<latestRightStageData>("/api/latest-right-data", 1000);
 
 return (
 
 <AppLayout>
-
-
     <Head title="Dashboard" />
     <div className="flex h-full flex-1 flex-col gap-4 rounded-xl p-4 overflow-x-auto">
         <div className="grid auto-rows-min gap-4 md:grid-cols-2">
@@ -107,6 +102,7 @@ return (
                                 suffix='rev' />
                         </div>
                         <div>
+                            
                         </div>
                     </div>
                 </CardContent>

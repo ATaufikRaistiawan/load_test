@@ -20,5 +20,8 @@ class DatabaseSeeder extends Seeder
         MachineLeftData::factory(150)->create();
         MachineRightData::factory(150)->create();
 
+    $this->call([
+        AlarmListSeeder::class,
+    ]);
     }
 }
