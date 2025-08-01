@@ -62,7 +62,8 @@ const handleExport = () => {
   RPM: item.rpm,
   Revolution: item.rev,
   Load: item.load,
-  Alarm: item.alarmMessage ?? "-", // ⬅️ pake alarmMessage buat export
+  // Alarm: item.alarm,
+  // Alarm: item.alarmMessage ?? "-", // ⬅️ pake alarmMessage buat export
 }))
 
 

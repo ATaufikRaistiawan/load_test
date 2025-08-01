@@ -47,9 +47,9 @@ return (
                         className="data-[state=active]:bg-slate-700 data-[state=active]:text-cyan-400">
                         Right Stage
                     </TabsTrigger>
-                    <TabsTrigger value="total"
+                    <TabsTrigger value="history"
                         className="data-[state=active]:bg-slate-700 data-[state=active]:text-cyan-400">
-                        Total
+                        Alarm History
                     </TabsTrigger>
                 </TabsList>
             </div>
@@ -95,7 +95,8 @@ return (
                             rpm: item.rpm,
                             rev: item.rev,
                             load: item.load,
-                            alarm: item.alarmDetail?.message ?? "-", // ambil message alarm
+                            alarm: item.alarm, // ⬅️ still number for filtering
+                            alarmMessage: item.alarm_detail?.message ?? "-", // ambil message alarm
                             }))}
                             />
 
@@ -103,9 +104,9 @@ return (
                 </div>
             </TabsContent>
 
-            <TabsContent value="total" className="mt-0">
+            <TabsContent value="history" className="mt-0">
                 <div className="bg-slate-800/30 rounded-lg border border-slate-700/50 p-4">
-                    third tab
+                Here is the table for alarm history
                 </div>
             </TabsContent>
         </Tabs>

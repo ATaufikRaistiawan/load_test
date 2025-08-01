@@ -49,10 +49,10 @@ export const columns: ColumnDef<Payment>[] = [
     // accessorKey: "alarm",
     // header: "Alarm",
     // },
-    {
-    accessorKey: "alarmMessage",
-    header: "Alarm",
-    cell: ({ row }) => row.getValue("alarmMessage"),
-    }
+    // {
+    // accessorKey: "alarmMessage",
+    // header: "Alarm",
+    // cell: ({ row }) => row.getValue("alarmMessage"),
+    // }
 
     ]
