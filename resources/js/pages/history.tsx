@@ -1,5 +1,5 @@
 "use client"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { PlaceholderPattern } from '@/components/ui/placeholder-pattern';
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
@@ -8,6 +8,14 @@ import { type leftStageData, rightStageData} from '@/types'
 import { DatePickerWithRange } from "@/components/date-picker-with-range"
 import { DateRange } from "react-day-picker"
 
+import { Button } from "@/components/ui/button";
+import {
+  Select,
+  SelectTrigger,
+  SelectContent,
+  SelectItem,
+  SelectValue
+} from "@/components/ui/select";
 
 import {
 Tabs,
@@ -17,6 +25,7 @@ TabsTrigger
 } from "@/components/ui/tabs"
 
 import { columns, Payment } from "./columns"
+import { columnsAlarm, alarmHistory } from "./columns-alarm"
 import { DataTable } from "./data-table"
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -29,14 +38,34 @@ href: '/history',
 
 export default function History({leftHistory, rightHistory}: {leftHistory: leftStageData[], rightHistory:
 rightStageData[]}) {
-console.log(leftHistory);
+// console.log(leftHistory);
+const [data, setData] = useState([]);
+const [activeTab, setActiveTab] = useState("left");
+const [alarmFilter, setAlarmFilter] = useState("all");
+
+
+  useEffect(() => {
+    // ini dijalanin SEKALI pas komponen muncul
+  const fetchData = () => {
+    fetch('/alarms')
+      .then((res) => res.json())
+      .then((json) => setData(json))
+  }
+  
+  fetchData() // langsung jalan sekali
+  const interval = setInterval(fetchData, 2000) // lalu jalan tiap 5 detik
+
+  return () => clearInterval(interval) // bersihin interval pas komponen di-unmount
+
+  }, []) // ← ini array kosong artinya "cuma jalan sekali"
 
 return (
 <AppLayout>
 
     <Head title="History" />
     <div className="mt-8">
-        <Tabs defaultValue="left" className="w-full">
+        <Tabs value={activeTab} onValueChange={(val) => setActiveTab(val)} className="w-full">
+        {/* <Tabs defaultValue="left" className="w-full"> */}
             <div className="flex items-center justify-between mb-4">
                 <TabsList className="bg-slate-800/50 p-1">
                     <TabsTrigger value="left"
@@ -52,6 +81,36 @@ return (
                         Alarm History
                     </TabsTrigger>
                 </TabsList>
+                
+            {/* 🟢 TOMBOL & FILTER CUMA MUNCUL DI TAB HISTORY */}
+            {activeTab === "history" && (
+              <div className="flex gap-2">
+                <Select
+                  value={alarmFilter}
+                  onValueChange={(v) =>
+                    setAlarmFilter(v as "all" | "alarm" | "normal")
+                  }
+                >
+                  <SelectTrigger className="w-[150px] bg-slate-700 text-white">
+                    <SelectValue placeholder="Filter Alarm" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">All</SelectItem>
+                    <SelectItem value="alarm">Alarm Only</SelectItem>
+                    <SelectItem value="normal">Normal Only</SelectItem>
+                  </SelectContent>
+                </Select>
+
+                <Button
+                  onClick={() => {
+                    // Nanti lu bikin handleExport() di sini
+                  }}
+                  className="bg-green-700 text-white hover:bg-green-600"
+                >
+                  Export Excel
+                </Button>
+              </div>
+            )}
             </div>
 
             <TabsContent value="left" className="mt-0">
@@ -106,7 +165,13 @@ return (
 
             <TabsContent value="history" className="mt-0">
                 <div className="bg-slate-800/30 rounded-lg border border-slate-700/50 p-4">
-                Here is the table for alarm history
+                    <DataTable columns={columnsAlarm} data={(data || []).map((item)=> ({
+                        id: item.id,
+                        timestamp: item.timestamp,
+                        alarm: item.message,
+                        active: item.active,
+                        }))}
+                        />
                 </div>
             </TabsContent>
         </Tabs>

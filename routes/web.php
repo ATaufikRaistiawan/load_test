@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\HistoryController;
+use App\Http\Controllers\AlarmHistoryController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -15,3 +16,4 @@ Route::get('/stage', fn () => Inertia::render('Stage/Index'))->name('stage.index
 
 Route::get('/api/latest-left-data', [IndexController::class, 'latestLeftData']);
 Route::get('/api/latest-right-data', [IndexController::class, 'latestRightData']);
+Route::get('/alarms', [AlarmHistoryController::class, 'index']);

@@ -21,6 +21,20 @@ import {
 } from "@/components/ui/table"
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react"
 
+import * as React from "react"
+
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+
+
+
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
@@ -111,21 +125,6 @@ const handleExport = () => {
             onChange={(e) => setToDateTime(e.target.value)}
           />
         </div>
-        <div className="flex items-center gap-2 px-4">
-          <input
-            type="checkbox"
-            id="alarmFilter"
-            checked={onlyAlarm}
-            onChange={() => setOnlyAlarm(!onlyAlarm)}
-          />
-          <label htmlFor="alarmFilter" className="text-white text-sm">
-            Alarm
-          </label>
-        </div>
-        <Button onClick={handleExport} className="ml-auto bg-green-700 text-white hover:bg-green-600">
-  Export Excel
-</Button>
-
       </div>
 
       {/* Tabel */}
@@ -191,3 +190,4 @@ const handleExport = () => {
     </div>
   )
 }
+
